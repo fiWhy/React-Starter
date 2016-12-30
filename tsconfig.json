@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "node_modules/vue/types",
+      "node_modules/vue-router/types",
+      "node_modules/vue-class-component"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
