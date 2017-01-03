@@ -15,14 +15,25 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vue": "^2.1.8",
-    "vue-router": "^2.1.1"
+    "bootstrap": "^3.3.7",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.8.1",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.5.38",
     "@types/jquery": "^2.0.34",
     "@types/karma": "^0.13.33",
     "@types/node": "^6.0.54",
+    "@types/react": "^0.14.55",
+    "@types/react-dom": "^0.14.20",
+    "@types/react-redux": "^4.4.35",
+    "@types/react-router": "^2.0.41",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
     "@types/webpack": "^2.0.0",
     "awesome-typescript-loader": "^3.0.0-beta.17",
     "css-loader": "^0.25.0",
@@ -47,7 +58,6 @@
     "node-sass": "^4.1.1",
     "sass-loader": "^4.0.2",
     "typescript": "^2.1.4",
-    "vue-class-component": "^4.4.0",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2",
     "webpack-merge": "^0.15.0"
