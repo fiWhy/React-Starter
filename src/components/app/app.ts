@@ -3,9 +3,19 @@ import Component from "vue-class-component";
 import * as template from './app.html';
 import './app.scss';
 
-@Component({
-    template: `${template}`
-})
-export class AppComponent extends Vue{
+import { AppService, IAppService } from './services/app.service';
 
+@Component({
+    template: template.toString()
+})
+export class AppComponent extends Vue {
+    public AppService: IAppService;
+    public cards: any[];
+    constructor() {
+        super();
+        this.AppService = AppService;
+        this.cards = AppService.cards;
+    }
 }
+
+

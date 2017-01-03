@@ -1,1 +1,5 @@
-import App from './app';
+import { AppInit } from './app';
+import { PianoInit } from './piano';
+
+AppInit();
+PianoInit();

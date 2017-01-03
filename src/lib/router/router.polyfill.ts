@@ -1,16 +1,18 @@
 import * as VueRouter from 'vue-router';
 
-export class RouterPolyfill<T> {
-    private routes: VueRouter.Route[];
+class RouterPolyfill {
+    private routes: VueRouter.RouteConfig[];
     constructor() {
         this.routes = [];
     }
-    registerRoute(route: VueRouter.Route): void {
+    registerRoute(route: VueRouter.RouteConfig): void {
         this.routes.push(route);
     }
 
-    createRouter(): VueRouter {
+    createRouter(mode: VueRouter.RouterMode): VueRouter {
         let {routes} = this;
-        return new VueRouter({ routes });
+        return new VueRouter({ mode, routes });
     }
 }
+
+export const Router = new RouterPolyfill;

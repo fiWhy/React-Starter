@@ -1,3 +1,5 @@
-import { AppComponent } from './app';
+import { registerRoutes } from './config/router';
 
-export default AppComponent;
+export const AppInit = () => {
+    registerRoutes();
+}
