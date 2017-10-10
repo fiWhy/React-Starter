@@ -6,12 +6,16 @@ module.exports = (function() {
     var base = root('./'),
         src = root('src'),
         dist = root('dist'),
-        devPort = 3000;
+        html = root("src", "index.html"),
+        devPort = 3000,
+        extensions = ['.js', '.ts', '.tsx', '.html', 'scss'];
 
     return {
         base: base,
         src: src,
         dist: dist,
-        devPort: devPort
+        devPort: devPort,
+        extensions: extensions,
+        html: html
     }
 })();

@@ -8,8 +8,8 @@ var webpackConfig = require('../config/webpack.dev');
 
 function run() {
     var compiler = webpack(webpackConfig);
-    return new webpackDevServer(compiler, function(data) {
-
+    return new webpackDevServer(compiler, {
+        publicPath: "",
     }).listen(mainConfig.devPort)
 }
 
