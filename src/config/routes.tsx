@@ -1,10 +1,17 @@
+import * as React from "react";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import {RouteCombiner} from '../utils/router/route.combiner';
+const RouteWithSubRoutes  = (route) => (
+  <Route path={route.path} render={props => (
+    <route.component {...props} routes={route.routes}/>
+  )}/>
+);
 
-import App from '../components/app';
-import Home from '../components/home';
+const routes = <Router>
+        <Switch>
+            {RouteCombiner.routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+        </Switch>
+    </Router>;
 
-RouteCombiner.setApplication(App);
-RouteCombiner.setIndexRoute(Home);
 
-let routes = RouteCombiner.routes;
 export default routes;

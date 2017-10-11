@@ -1,13 +1,4 @@
-import cards from '../mocks/cards';
-
-export interface IAppService {
-    cards: any[];
-}
-
-class AppServiceImplementation implements IAppService {
-    get cards(): any[] {
-        return cards;
-    }
+class AppServiceImplementation {
 }
 
 export const AppService = new AppServiceImplementation;

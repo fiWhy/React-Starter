@@ -1,5 +1,6 @@
 import * as React from 'react';
 import HomePresentation from './presentations/home';
+import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 import {MainHomeAction} from './actions/main.action';
 
@@ -15,9 +16,7 @@ class HomeContainer extends React.Component<any, any> {
     
     render() {
         const {home} = this.props;
-        return (
-            <HomePresentation />
-        )
+        return <HomePresentation />;
     }
 }
 
@@ -33,5 +32,5 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const Home = connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
+const Home = withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeContainer));
 export default Home;

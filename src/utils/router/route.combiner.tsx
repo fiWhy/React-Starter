@@ -1,28 +1,21 @@
 import {IRouteProvider} from './contracts/route.provider';
+import { RouteProps } from "react-router-dom";
 
 export interface IRouteCombiner {
-    setApplication(component: any, path?: string): void;
-    setIndexRoute(component: any): void;
-    addRoutes(routes: any): void;
+    addRoutes(routes: RouteProps[]): void;
+    addRoute(route: RouteProps): void;
 }
 
 class Combiner implements IRouteCombiner {
-    private _routes: any = {childRoutes: {}, indexRoute: {}};
+    private _routes: RouteProps[] = [];
     private _routeProviders: IRouteProvider[] = [];
-    setApplication(component: any, path: string = '/'): void {
-        this._routes.path = path;
-        this._routes.component = component;
-    }
-    
-    setIndexRoute(component: any): void {
-        this._routes.indexRoute.component = component;
+
+    addRoutes(routes: RouteProps[]): void {
+        this._routes = [...this._routes, ...routes];
     }
 
-    addRoutes(routes: any): void {
-        this._routes = Object.assign(this._routes, {
-            childRoutes: {
-                routes
-            }});
+    addRoute(route: RouteProps): void {
+        this._routes = [...this._routes, route];
     }
 
     registerRouteProvider(service): void {
@@ -36,7 +29,6 @@ class Combiner implements IRouteCombiner {
 
                 provider.register(this);
         });
-        
         return this._routes;
     }
 }

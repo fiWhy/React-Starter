@@ -1,18 +1,14 @@
 import * as React from 'react';
+import { AppService } from "./services/app.service";
 
 export default class App extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
     }
 
-    componentDidMount() {
-    }
+    componentDidMount() {}
     
     render() {
-        return (
-            <div>
-                {this.props.children}
-            </div>
-        )
+        return this.props.children;
     }
 }
