@@ -1,1 +1,0 @@
-export const MAIN_CONST = 'MAIN_CONST';

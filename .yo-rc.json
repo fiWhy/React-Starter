@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Denis Buryachkovsky",
+      "authorEmail": "zekatsi5@gmail.com",
+      "authorUrl": "https://github.com/fiWhy"
+    }
+  }
+}

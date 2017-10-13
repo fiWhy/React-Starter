@@ -1,3 +1,0 @@
-interface NodeRequire {
-    context: Function;
-}
