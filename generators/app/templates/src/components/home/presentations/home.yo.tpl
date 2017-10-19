@@ -2,16 +2,16 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 <% if(styledComponents) { %>import { Container } from "../../../styled/container";<% } %>
 
-const DashboardPresentation = () => (
+const HomePresentation = () => (
     <% if(styledComponents) { %><Container><% } %><% if(!styledComponents) { %><div><% } %>
-        <h2>Dashboard</h2>
+        <h2>Home</h2>
         <ul>
-            <li><Link to="/home">Home</Link></li>
+            <li><Link to="/">Dashboard</Link></li>
         </ul>
         <div>
-            Welcome to Dashboard!
+            Home!
         </div>
     <% if(styledComponents) { %></Container><% } %><% if(!styledComponents) { %></div><% } %>
 );
 
-export default DashboardPresentation;
+export default HomePresentation;

@@ -1,7 +1,6 @@
-'use strict';
-const Generator = require('yeoman-generator');
-const chalk = require('chalk');
-const yosay = require('yosay');
+"use strict";
+const Generator = require("yeoman-generator");
+const yosay = require("yosay");
 const files = require("./files");
 const prompts = require("./prompts");
 
@@ -13,9 +12,7 @@ module.exports = class extends Generator {
 
   prompting() {
     // Have Yeoman greet the user.
-    this.log(yosay(
-      'Welcome to react16 generator!'
-    ));
+    this.log(yosay("Welcome to react16 generator!"));
 
     return this.prompt(prompts).then(props => {
       // To access props later use this.props.someAnswer;
@@ -26,20 +23,18 @@ module.exports = class extends Generator {
   conformProps() {
     const { projectKeywords } = this.props;
     console.log(projectKeywords);
-    this.props.projectKeywords = projectKeywords ?
-      projectKeywords.split(",") :
-      [];
+    this.props.projectKeywords = projectKeywords ? projectKeywords.split(",") : [];
   }
 
   writing() {
     console.log("writing");
-    files(this.props).forEach((file) => {
+    files(this.props).forEach(file => {
       this.fs.copyTpl(
         this.templatePath(file.from),
         this.destinationPath(file.to),
         this.props
       );
-    })
+    });
   }
 
   install() {

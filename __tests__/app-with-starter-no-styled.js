@@ -5,7 +5,7 @@ var helpers = require("yeoman-test");
 var contentHelpers = require("../test-configs/content");
 var mainConfig = require("../test-configs/main")();
 
-describe("generator-react-16-boilerplate:app", () => {
+describe("generator-react-16-boilerplate:app with starter content but without styled", () => {
   var dashboardPresentationContent;
   var homePresentationContent;
   var packageJson;
@@ -19,7 +19,7 @@ describe("generator-react-16-boilerplate:app", () => {
         projectDescription: mainConfig.projectDescription,
         projectKeywords: mainConfig.projectKeywords,
         devName: mainConfig.projectDev,
-        styledComponents: true,
+        styledComponents: false,
         starterData: true
       })
       .then(dir => {
@@ -36,21 +36,21 @@ describe("generator-react-16-boilerplate:app", () => {
       });
   });
 
-  it("creates additional files", () => {
-    assert.file(mainConfig.withAdditionalFiles);
+  it("creates files", () => {
+    assert.file(mainConfig.withContentFiles);
   });
 
-  it("puts styled-components in dependencies", () => {
-    assert.equal(Boolean(packageJson.dependencies["styled-components"]), true);
+  it("doesn't put styled-components in dependencies", () => {
+    assert.equal(Boolean(packageJson.dependencies["styled-components"]), false);
   });
 
   it("generates presentation for dashboard with styled-components", () => {
-    var presentationContent = presentationTemplate(true, "Dashboard");
+    var presentationContent = presentationTemplate(false, "Dashboard");
     assert.equal(dashboardPresentationContent, removeSpaces(presentationContent));
   });
 
   it("generates presentation for home with styled-components", () => {
-    var presentationContent = presentationTemplate(true, "Home");
+    var presentationContent = presentationTemplate(false, "Home");
     assert.equal(homePresentationContent, removeSpaces(presentationContent));
   });
 });

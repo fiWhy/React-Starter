@@ -1,10 +1,10 @@
-import {IReducerProvider} from '../../../utils/reducer/contracts/reducer.provider';
-import {IReducerCombiner} from '../../../utils/reducer/reducer.combiner';
-import { MainHomeReducer } from '../reducers/main.reducer';
+import { IReducerProvider } from '../../../utils/reducer/contracts/reducer.provider';
+import { IReducerCombiner } from '../../../utils/reducer/reducer.combiner';
+import { HomeDataReducer } from '../reducers/data.reducer';
 
 class HomeReducerProvider implements IReducerProvider {
     public register(reducerCombiner: IReducerCombiner) {
-        reducerCombiner.registerReducer('home', MainHomeReducer);
+        reducerCombiner.registerReducer('homeData', HomeDataReducer);
     }
 }
 

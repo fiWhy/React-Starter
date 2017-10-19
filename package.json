@@ -8,9 +8,7 @@
     "email": "zekatsi5@gmail.com",
     "url": "https://github.com/fiWhy"
   },
-  "files": [
-    "generators"
-  ],
+  "files": ["generators"],
   "main": "generators/index.js",
   "keywords": [
     "react",
@@ -44,25 +42,18 @@
   },
   "scripts": {
     "prepublish": "nsp check",
-    "pretest": "eslint .",
+    "pretest": "npm run eslint-clear && eslint .",
     "precommit": "lint-staged",
-    "test": "jest"
+    "test": "jest",
+    "eslint-clear":
+      "eslint --fix ./__tests__/*.js && eslint --fix ./generators/*.js && eslint --fix ./test-configs/*.js"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.json": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.js": ["eslint --fix", "git add"],
+    "*.json": ["prettier --write", "git add"]
   },
   "eslintConfig": {
-    "extends": [
-      "xo",
-      "prettier"
-    ],
+    "extends": ["xo", "prettier"],
     "env": {
       "jest": true,
       "node": true
@@ -71,14 +62,12 @@
       "prettier/prettier": [
         "error",
         {
-          "singleQuote": true,
+          "singleQuote": false,
           "printWidth": 90
         }
       ]
     },
-    "plugins": [
-      "prettier"
-    ]
+    "plugins": ["prettier"]
   },
   "repository": "/generator-react-16-boilerplate",
   "license": "GPL-3.0"

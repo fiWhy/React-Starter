@@ -1,4 +1,4 @@
-import {MAIN_CONST} from '../constants/main.constants';
+import {MAIN_CONST} from '../constants';
 export const MainHomeAction = (text: string) => 
     dispatch => {
         dispatch({type: MAIN_CONST});
