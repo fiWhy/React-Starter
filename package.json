@@ -63,7 +63,8 @@
         "error",
         {
           "singleQuote": false,
-          "printWidth": 90
+          "printWidth": 90,
+          "useTabs": true
         }
       ]
     },
