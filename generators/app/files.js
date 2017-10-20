@@ -17,14 +17,16 @@ module.exports = function(config) {
 		{ from: "config/webpack.yo.tpl", to: "config/webpack.js" },
 
 		{ from: "src/components/app/**/*.tsx", to: "src/components/app" },
+		{ from: "src/components/app/**/*.ts", to: "src/components/app" },
 		{ from: "src/config/*.tsx", to: "src/config" },
+		{ from: "src/config/*.ts", to: "src/config" },
 		{ from: "src/middlewares/*.tsx", to: "src/middlewares" },
 		{ from: "src/store/*.tsx", to: "src/store" },
 		{ from: "src/utils/**/*.tsx", to: "src/utils" },
 		{ from: "src/index.html", to: "src/index.html" },
-		{ from: "src/config/bootstrap.yo.tpl", to: "src/config/bootstrap.tsx" },
+		{ from: "src/config/bootstrap.yo.tpl", to: "src/config/bootstrap.ts" },
 		{ from: "src/app.tsx", to: "src/app.tsx" },
-		{ from: "src/vendor.tsx", to: "src/vendor.tsx" }
+		{ from: "src/vendor.ts", to: "src/vendor.ts" }
 	];
 
 	if (config.styledComponents) {

@@ -1,1 +1,0 @@
-export const DASHBOARD_CONST = 'DASHBOARD_CONST';
