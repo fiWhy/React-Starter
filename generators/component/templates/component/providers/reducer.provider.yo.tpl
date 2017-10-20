@@ -1,13 +1,13 @@
-import {IReducerProvider} from '../../../utils/reducer/contracts/reducer.provider';
-import {IReducerCombiner} from '../../../utils/reducer/reducer.combiner';
-import { DashboardDataReducer } from '../reducers/data.reducer';
+import { IReducerProvider } from '../../../utils/reducer/contracts/reducer.provider';
+import { IReducerCombiner } from '../../../utils/reducer/reducer.combiner';
+import { <%= componentName %>DataReducer } from '../reducers/data.reducer';
 
-class DashboardReducerProvider implements IReducerProvider {
+class <%= componentName %>ReducerProvider implements IReducerProvider {
     public register(reducerCombiner: IReducerCombiner) {
-        reducerCombiner.registerReducer('dashboardData', DashboardDataReducer);
+        reducerCombiner.registerReducer('<%= componentNameCamel %> Data', <%= componentName %>DataReducer);
     }
 }
 
-const _DashboardReducerProvider = new DashboardReducerProvider;
+const _<%= componentName %>ReducerProvider = new <%= componentName %>ReducerProvider;
 
-export default _DashboardReducerProvider;
+export default _<%= componentName %>ReducerProvider;

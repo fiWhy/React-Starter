@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "description": "<%= projectDescription %>",
     "main": "index.js",
-    "keywords": [<% for(var i=0; i < projectKeywords.length; i++) {%>"<%= projectKeywords[i] %>"<% } %>],
+    "keywords": [],
     "scripts": {
       "prod": "set NODE_ENV=production&& npm run build",
       "dev": "set NODE_ENV=development&& npm run build",

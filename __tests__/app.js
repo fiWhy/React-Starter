@@ -26,10 +26,16 @@ describe("generator-react-16-boilerplate:app", () => {
 			})
 			.then(dir => {
 				dashboardPresentationContent = removeSpaces(
-					readCreatedFile(dir, "./src/components/dashboard/presentations/dashboard.tsx")
+					readCreatedFile(
+						dir,
+						"./src/components/dashboard/presentations/dashboard.presentation.tsx"
+					)
 				);
 				homePresentationContent = removeSpaces(
-					readCreatedFile(dir, "./src/components/home/presentations/home.tsx")
+					readCreatedFile(
+						dir,
+						"./src/components/home/presentations/home.presentation.tsx"
+					)
 				);
 				packageJson = JSON.parse(readCreatedFile(dir, "./package.json"));
 			});

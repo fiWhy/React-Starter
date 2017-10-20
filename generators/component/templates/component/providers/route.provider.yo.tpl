@@ -1,17 +1,17 @@
-import {IRouteProvider} from '../../../utils/router/contracts/route.provider';
-import {IRouteCombiner} from '../../../utils/router/route.combiner';
-import Dashboard from "../index";
+import { IRouteProvider } from '../../../utils/router/contracts/route.provider';
+import { IRouteCombiner } from '../../../utils/router/route.combiner';
+import <%= componentName %> from "../index";
 
-class DashboardRouteProvider implements IRouteProvider {
+class <%= componentName %>RouteProvider implements IRouteProvider {
     public register(routeCombiner: IRouteCombiner) {
         routeCombiner.addRoute({
             path: '/', 
-            component: Dashboard,
+            component: <%= componentName %>,
             exact: true,
         });
     }
 }
 
-const _DashboardRouteProvider = new DashboardRouteProvider;
+const _<%= componentName %>RouteProvider = new <%= componentName %>RouteProvider;
 
-export default _DashboardRouteProvider;
+export default _<%= componentName %>RouteProvider;

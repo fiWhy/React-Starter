@@ -20,6 +20,18 @@ module.exports = class extends Generator {
 		});
 	}
 
+	generateStarterData() {
+		const { starterData } = this.props;
+		if (starterData) {
+			this.composeWith(require.resolve("../component"), {
+				componentName: "Home"
+			});
+			this.composeWith(require.resolve("../component"), {
+				componentName: "Dashboard"
+			});
+		}
+	}
+
 	conformProps() {
 		const { projectKeywords } = this.props;
 		this.props.projectKeywords = projectKeywords ? projectKeywords.split(",") : [];

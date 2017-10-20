@@ -27,28 +27,13 @@ module.exports = function(config) {
 		{ from: "src/vendor.tsx", to: "src/vendor.tsx" }
 	];
 
-	if (config.starterData) {
+	if (config.styledComponents) {
 		mainFiles = mainFiles.concat([
-			{ from: "src/components/dashboard/**/*.tsx", to: "src/components/dashboard" },
-			{ from: "src/components/home/**/*.tsx", to: "src/components/home" },
 			{
-				from: "src/components/dashboard/presentations/dashboard.yo.tpl",
-				to: "src/components/dashboard/presentations/dashboard.tsx"
-			},
-			{
-				from: "src/components/home/presentations/home.yo.tpl",
-				to: "src/components/home/presentations/home.tsx"
+				from: "src/styled/container.yo.tpl",
+				to: "src/styled/container.tsx"
 			}
 		]);
-
-		if (config.styledComponents) {
-			mainFiles = mainFiles.concat([
-				{
-					from: "src/styled/container.yo.tpl",
-					to: "src/styled/container.tsx"
-				}
-			]);
-		}
 	}
 
 	return mainFiles;

@@ -1,15 +1,27 @@
 "use strict";
 const Generator = require("yeoman-generator");
 const files = require("./files");
-const prompts = require("./prompts");
 const textHelpers = require("../../helpers/text");
 
 module.exports = class extends Generator {
-	prompting() {
-		return this.prompt(prompts).then(props => {
-			props.componentNameLower = textHelpers.toDashCase(props.componentName);
-			this.props = props;
+	constructor(args, opts) {
+		super(args, opts);
+
+		this.option("componentName", {
+			type: String,
+			required: true
 		});
+	}
+
+	initializing() {
+		const { toDashCase, genComponentName, toCamelCase } = textHelpers;
+		const { componentName } = this.options;
+		let props = {};
+		props.componentNameLower = toDashCase(componentName);
+		props.componentNameCamel = toCamelCase(componentName);
+		props.componentName = genComponentName(componentName);
+		props.upperComponentName = props.componentName.toUpperCase();
+		this.props = props;
 	}
 
 	writing() {

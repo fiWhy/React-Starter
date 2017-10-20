@@ -1,8 +1,8 @@
-import {DASHBOARD_CONST} from '../constants';
-export const MainHomeAction = (text: string) => 
+import { <%= upperComponentName %>_CONST } from '../constants';
+export const Main<%= componentName %>Action = (text: string) => 
     dispatch => {
-        dispatch({type: DASHBOARD_CONST});
+        dispatch({type: <%= upperComponentName %>_CONST});
         setTimeout(() => {
-            dispatch({type: DASHBOARD_CONST, text});
+            dispatch({type: <%= upperComponentName %>_CONST, text});
         }, 1000);
     };

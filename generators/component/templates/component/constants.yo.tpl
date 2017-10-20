@@ -1,1 +1,1 @@
-export const DASHBOARD_CONST = 'DASHBOARD_CONST';
+export const <%= upperComponentName %>_CONST = '<%= upperComponentName %>_CONST';

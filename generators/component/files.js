@@ -13,7 +13,7 @@ module.exports = function({ componentNameLower }) {
 		},
 		{
 			from: `${componentSrcPath}/presentations/component-presentation.yo.tpl`,
-			to: `${componentDistPath}/actions/${componentNameLower}.presentation.tsx`
+			to: `${componentDistPath}/presentations/${componentNameLower}.presentation.tsx`
 		},
 		{
 			from: `${componentSrcPath}/providers/reducer.provider.yo.tpl`,

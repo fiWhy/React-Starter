@@ -12,11 +12,6 @@ module.exports = [
 	},
 	{
 		type: "input",
-		name: "projectKeywords",
-		message: "Project keywords"
-	},
-	{
-		type: "input",
 		name: "devName",
 		message: "What is your name?",
 		store: true

@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 
-const DashboardPresentation = () => (
+const <%= componentName  %>Presentation = () => (
     <div>
-        <h2>Dashboard</h2>
+        <h2><%= componentName  %></h2>
         <div>
-            Dashboard works!
+            <%= componentName  %> works!
         </div>
     </div>
 );
 
-export default DashboardPresentation;
+export default <%= componentName  %>Presentation;
