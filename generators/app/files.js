@@ -1,4 +1,4 @@
-module.exports = function(config) {
+module.exports = function({ styledComponents, sourceRoot }) {
 	let mainFiles = [
 		{ from: "_tsconfig.json", to: "tsconfig.json" },
 		{ from: "package.json.yo.tpl", to: "package.json" },
@@ -14,23 +14,23 @@ module.exports = function(config) {
 		{ from: "config/webpack.dev.yo.tpl", to: "config/webpack.dev.js" },
 		{ from: "config/webpack.yo.tpl", to: "config/webpack.js" },
 
-		{ from: "src/components/app/**/*.tsx", to: "src/components/app" },
-		{ from: "src/components/app/**/*.ts", to: "src/components/app" },
-		{ from: "src/config/*.tsx", to: "src/config" },
-		{ from: "src/middlewares/*.ts", to: "src/middlewares" },
-		{ from: "src/store/*.ts", to: "src/store" },
-		{ from: "src/utils/**/*.ts", to: "src/utils" },
-		{ from: "src/index.html", to: "src/index.html" },
-		{ from: "src/config/bootstrap.yo.tpl", to: "src/config/bootstrap.ts" },
-		{ from: "src/app.tsx", to: "src/app.tsx" },
-		{ from: "src/vendor.ts", to: "src/vendor.ts" }
+		{ from: "src/components/app/**/*.tsx", to: `${sourceRoot}/components/app` },
+		{ from: "src/components/app/**/*.ts", to: `${sourceRoot}/components/app` },
+		{ from: "src/config/*.tsx", to: `${sourceRoot}/config` },
+		{ from: "src/middlewares/*.ts", to: `${sourceRoot}/middlewares` },
+		{ from: "src/store/*.ts", to: `${sourceRoot}/store` },
+		{ from: "src/utils/**/*.ts", to: `${sourceRoot}/utils` },
+		{ from: "src/index.html", to: `${sourceRoot}/index.html` },
+		{ from: "src/config/bootstrap.yo.tpl", to: `${sourceRoot}/config/bootstrap.ts` },
+		{ from: "src/app.tsx", to: `${sourceRoot}/app.tsx` },
+		{ from: "src/vendor.ts", to: `${sourceRoot}/vendor.ts` }
 	];
 
-	if (config.styledComponents) {
+	if (styledComponents) {
 		mainFiles = mainFiles.concat([
 			{
 				from: "src/styled/container.yo.tpl",
-				to: "src/styled/container.tsx"
+				to: `${sourceRoot}/styled/container.tsx`
 			}
 		]);
 	}

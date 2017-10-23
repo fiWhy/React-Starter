@@ -46,7 +46,7 @@
     "precommit": "lint-staged",
     "test": "jest",
     "eslint-clear":
-      "eslint --fix ./__tests__/*.js && eslint --fix ./generators/*.js && eslint --fix ./test-configs/*.js"
+      "eslint --fix ./__tests__/**/*.js && eslint --fix ./generators/*.js && eslint --fix ./config/*.js"
   },
   "lint-staged": {
     "*.js": ["eslint --fix", "git add"],

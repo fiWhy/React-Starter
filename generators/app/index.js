@@ -16,6 +16,7 @@ module.exports = class extends Generator {
 
 		return this.prompt(prompts).then(props => {
 			// To access props later use this.props.someAnswer;
+			this.config.set("sourceRoot", props.sourceRoot);
 			this.props = props;
 		});
 	}
@@ -24,10 +25,10 @@ module.exports = class extends Generator {
 		const { starterData } = this.props;
 		if (starterData) {
 			this.composeWith(require.resolve("../component"), {
-				componentName: "Home"
+				arguments: ["components/home"]
 			});
 			this.composeWith(require.resolve("../component"), {
-				componentName: "Dashboard"
+				arguments: ["components/dashboard"]
 			});
 		}
 	}
@@ -38,7 +39,7 @@ module.exports = class extends Generator {
 	}
 
 	writing() {
-		files(this.props).forEach(file => {
+		files(Object.assign(this.props, this.config.getAll())).forEach(file => {
 			this.fs.copyTpl(
 				this.templatePath(file.from),
 				this.destinationPath(file.to),

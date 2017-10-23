@@ -3,28 +3,27 @@ var path = require("path");
 var assert = require("yeoman-assert");
 var helpers = require("yeoman-test");
 var textHelpers = require("../helpers/text");
-var contentHelpers = require("../test-configs/content");
-var mainConfig = require("../test-configs/main");
+var mainConfig = require("../config/main");
+var testConfig = require("../config/for-test");
 
 describe("generator-react-16-boilerplate:component", () => {
-	// Var { readCreatedFile, removeSpaces, presentationTemplate } = contentHelpers;
+	// Var { readCreatedFile, removeSpaces, presentationTemplate } = testConfig;
 	let genPresentationContent;
-	const componentName = "testComponent";
-	const { removeSpaces, readCreatedFile } = textHelpers;
-	const { contentFiles, componentDashed, upperComponentName } = mainConfig.component(
-		componentName
+	const componentName = "components/testComponent";
+	const { removeSpaces, readCreatedFile, nameFromPath } = textHelpers;
+	const { sourceRoot } = mainConfig();
+	const { contentFiles, componentDashed, upperComponentName } = testConfig.component(
+		nameFromPath(componentName)
 	);
 	beforeAll(() => {
 		return helpers
 			.run(path.join(__dirname, "../generators/component"))
-			.withOptions({
-				componentName
-			})
+			.withArguments([componentName])
 			.then(dir => {
 				genPresentationContent = removeSpaces(
 					readCreatedFile(
 						dir,
-						`./src/components/${componentDashed}/presentations/${componentDashed}.presentation.tsx`
+						`./${sourceRoot}/components/${componentDashed}/presentations/${componentDashed}.presentation.tsx`
 					)
 				);
 			});
@@ -35,10 +34,7 @@ describe("generator-react-16-boilerplate:component", () => {
 	});
 
 	it("generates presentation for component", () => {
-		var presentationContent = contentHelpers.presentationTemplate(
-			true,
-			upperComponentName
-		);
+		var presentationContent = testConfig.presentationTemplate(true, upperComponentName);
 		assert.equal(genPresentationContent, removeSpaces(presentationContent));
 	});
 });

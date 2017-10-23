@@ -1,8 +1,8 @@
 const { detectPath } = require("../../helpers/folders");
 
-module.exports = function({ componentNameLower, componentFullPath, sourceRoot }) {
+module.exports = function({ componentNameLower, sourceRoot }) {
 	const componentSrcPath = "component";
-	const componentDistPath = detectPath(sourceRoot, `${componentFullPath}/`);
+	const componentDistPath = detectPath(sourceRoot, `${componentNameLower}/`);
 	let mainFiles = [
 		{ from: `${componentSrcPath}/index.yo.tpl`, to: `${componentDistPath}/index.tsx` },
 		{

@@ -2,21 +2,24 @@
 var path = require("path");
 var assert = require("yeoman-assert");
 var helpers = require("yeoman-test");
-var mainConfig = require("../test-configs/main").app();
+var mainConfig = require("../config/main");
+var testConfig = require("../config/for-test").app();
 
 describe("generator-react-16-boilerplate:app without starter content", () => {
+	const { sourceRoot } = mainConfig();
 	beforeAll(() => {
 		return helpers.run(path.join(__dirname, "../generators/app")).withPrompts({
-			projectName: mainConfig.projectName,
-			projectDescription: mainConfig.projectDescription,
-			projectKeywords: mainConfig.projectKeywords,
-			devName: mainConfig.projectDev,
+			projectName: testConfig.projectName,
+			projectDescription: testConfig.projectDescription,
+			projectKeywords: testConfig.projectKeywords,
+			devName: testConfig.projectDev,
 			styledComponents: false,
-			starterData: false
+			starterData: false,
+			sourceRoot
 		});
 	});
 
 	it("doesn't create folders", () => {
-		assert.noFile([mainConfig.withContentFolders]);
+		assert.noFile([testConfig.withContentFolders]);
 	});
 });

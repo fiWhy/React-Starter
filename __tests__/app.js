@@ -2,39 +2,48 @@
 var path = require("path");
 var assert = require("yeoman-assert");
 var helpers = require("yeoman-test");
-var contentHelpers = require("../test-configs/content");
 var textHelpers = require("../helpers/text");
-var mainConfig = require("../test-configs/main").app();
+var mainConfig = require("../config/main");
+var testConfig = require("../config/for-test");
 
 describe("generator-react-16-boilerplate:app", () => {
 	var dashboardPresentationContent;
 	var homePresentationContent;
 	var packageJson;
 	var { readCreatedFile, removeSpaces } = textHelpers;
-	var { presentationTemplate } = contentHelpers;
+	const { sourceRoot } = mainConfig();
+	const {
+		projectName,
+		projectDescription,
+		projectKeywords,
+		projectDev,
+		withAdditionalFiles
+	} = testConfig.app();
 
+	const { presentationTemplate } = testConfig;
 	beforeAll(() => {
 		return helpers
 			.run(path.join(__dirname, "../generators/app"))
 			.withPrompts({
-				projectName: mainConfig.projectName,
-				projectDescription: mainConfig.projectDescription,
-				projectKeywords: mainConfig.projectKeywords,
-				devName: mainConfig.projectDev,
+				projectName: projectName,
+				projectDescription: projectDescription,
+				projectKeywords: projectKeywords,
+				devName: projectDev,
 				styledComponents: true,
-				starterData: true
+				starterData: true,
+				sourceRoot
 			})
 			.then(dir => {
 				dashboardPresentationContent = removeSpaces(
 					readCreatedFile(
 						dir,
-						"./src/components/dashboard/presentations/dashboard.presentation.tsx"
+						`./${sourceRoot}/components/dashboard/presentations/dashboard.presentation.tsx`
 					)
 				);
 				homePresentationContent = removeSpaces(
 					readCreatedFile(
 						dir,
-						"./src/components/home/presentations/home.presentation.tsx"
+						`./${sourceRoot}/components/home/presentations/home.presentation.tsx`
 					)
 				);
 				packageJson = JSON.parse(readCreatedFile(dir, "./package.json"));
@@ -42,7 +51,7 @@ describe("generator-react-16-boilerplate:app", () => {
 	});
 
 	it("creates additional files", () => {
-		assert.file(mainConfig.withAdditionalFiles);
+		assert.file(withAdditionalFiles);
 	});
 
 	it("puts styled-components in dependencies", () => {

@@ -13,7 +13,13 @@ module.exports = [
 	{
 		type: "input",
 		name: "devName",
-		message: "What is your name?",
+		message: "What is your name?"
+	},
+	{
+		type: "confirm",
+		name: "sourceRoot",
+		message: "Source folder name:",
+		default: "src",
 		store: true
 	},
 	{
