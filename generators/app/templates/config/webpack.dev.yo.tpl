@@ -7,7 +7,7 @@ var merge = require('webpack-merge');
 
 module.exports = merge(webpackConfig, {
     entry: {
-        vendor: config.src + '/vendor.tsx',
+        vendor: config.src + '/vendor.ts',
         app: config.src + '/app.tsx'
     },
     

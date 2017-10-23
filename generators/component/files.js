@@ -4,6 +4,10 @@ module.exports = function({ componentNameLower }) {
 	let mainFiles = [
 		{ from: `${componentSrcPath}/index.yo.tpl`, to: `${componentDistPath}/index.tsx` },
 		{
+			from: `${componentSrcPath}/index.test.yo.tpl`,
+			to: `${componentDistPath}/index.test.tsx`
+		},
+		{
 			from: `${componentSrcPath}/constants.yo.tpl`,
 			to: `${componentDistPath}/constants.ts`
 		},
@@ -14,6 +18,10 @@ module.exports = function({ componentNameLower }) {
 		{
 			from: `${componentSrcPath}/presentations/component-presentation.yo.tpl`,
 			to: `${componentDistPath}/presentations/${componentNameLower}.presentation.tsx`
+		},
+		{
+			from: `${componentSrcPath}/presentations/component-presentation.test.yo.tpl`,
+			to: `${componentDistPath}/presentations/${componentNameLower}.presentation.test.tsx`
 		},
 		{
 			from: `${componentSrcPath}/providers/reducer.provider.yo.tpl`,

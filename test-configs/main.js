@@ -26,11 +26,11 @@ module.exports.component = function(componentName) {
 		componentDashed: dashedComponentName,
 		contentFiles: [
 			`src/components/${dashedComponentName}/presentations/${dashedComponentName}.presentation.tsx`,
-			`src/components/${dashedComponentName}/actions/data.action.tsx`,
-			`src/components/${dashedComponentName}/providers/reducer.provider.tsx`,
-			`src/components/${dashedComponentName}/providers/route.provider.tsx`,
-			`src/components/${dashedComponentName}/reducers/data.reducer.tsx`,
-			`src/components/${dashedComponentName}/constants.tsx`,
+			`src/components/${dashedComponentName}/actions/data.action.ts`,
+			`src/components/${dashedComponentName}/providers/reducer.provider.ts`,
+			`src/components/${dashedComponentName}/providers/route.provider.ts`,
+			`src/components/${dashedComponentName}/reducers/data.reducer.ts`,
+			`src/components/${dashedComponentName}/constants.ts`,
 			`src/components/${dashedComponentName}/index.tsx`
 		]
 	};

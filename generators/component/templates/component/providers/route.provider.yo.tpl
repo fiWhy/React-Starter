@@ -5,7 +5,7 @@ import <%= componentName %> from "../index";
 class <%= componentName %>RouteProvider implements IRouteProvider {
     public register(routeCombiner: IRouteCombiner) {
         routeCombiner.addRoute({
-            path: '/', 
+            path: '/<%= componentNameLower %>', 
             component: <%= componentName %>,
             exact: true,
         });
