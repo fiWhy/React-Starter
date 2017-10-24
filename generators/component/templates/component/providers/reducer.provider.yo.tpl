@@ -4,7 +4,7 @@ import { <%= componentName %>DataReducer } from '../reducers/data.reducer';
 
 class <%= componentName %>ReducerProvider implements IReducerProvider {
     public register(reducerCombiner: IReducerCombiner) {
-        reducerCombiner.registerReducer('<%= componentNameCamel %> Data', <%= componentName %>DataReducer);
+        reducerCombiner.registerReducer('<%= componentNameCamel %>Data', <%= componentName %>DataReducer);
     }
 }
 

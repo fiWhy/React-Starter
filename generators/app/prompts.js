@@ -16,7 +16,7 @@ module.exports = [
 		message: "What is your name?"
 	},
 	{
-		type: "confirm",
+		type: "input",
 		name: "sourceRoot",
 		message: "Source folder name:",
 		default: "src",
