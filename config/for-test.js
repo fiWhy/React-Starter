@@ -1,4 +1,5 @@
 const textHelpers = require("../helpers/text");
+const foldersConfig = require("../helpers/folders");
 const mainConfig = require("./main");
 const app = () => {
 	const { sourceRoot } = mainConfig();
@@ -22,11 +23,15 @@ const app = () => {
 
 module.exports.app = app;
 
-module.exports.component = function(componentName) {
+module.exports.component = function(component) {
 	const { sourceRoot } = mainConfig();
+	const componentName = textHelpers.nameFromPath(component);
 	const dashedComponentName = textHelpers.toDashCase(componentName);
 	const genCmpName = textHelpers.genComponentName(componentName);
-	const componentPath = `${sourceRoot}/components/${dashedComponentName}/`;
+	const componentPath = `${foldersConfig.detectPath(
+		sourceRoot,
+		component
+	)}/${dashedComponentName}`;
 	return {
 		componentName: componentName,
 		upperComponentName: genCmpName,
