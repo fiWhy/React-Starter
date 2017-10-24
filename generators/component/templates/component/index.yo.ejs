@@ -1,0 +1,34 @@
+import * as React from "react";
+import { Link } from "react-router-dom";
+<% if(route) { %>import { withRouter } from "react-router-dom";<% } %>
+import { connect } from "react-redux";
+<% if(action) { %>import { <%= actionName %>Action } from "./actions/<%= actionDashed %>.action";<% } %>
+
+import <%= componentName %>Presentation from "./presentations/<%= componentNameLower %>.presentation";
+
+class <%= componentName %> extends React.Component<any, any>{
+    constructor(props: any) {
+        super(props);
+    }
+
+    componentDidMount() {
+    }
+    
+    render() {
+        return <<%= componentName %>Presentation/>;
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        <% if(reducer) { %><%= reducer %>: state.<%= componentName %><%= reducerName %>Reducer<% } %>
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        <% if(action) { %><%= actionName %>: () => dispatch(<%= actionName %>Action())<% } %>
+    }
+}
+
+export default <% if(route) { %>withRouter(<% } %>connect(mapStateToProps, mapDispatchToProps)(<%= componentName %>)<% if(route) { %>);<% } %>

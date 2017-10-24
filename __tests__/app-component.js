@@ -7,15 +7,16 @@ var textHelpers = require("../helpers/text");
 var mainConfig = require("../config/main");
 var testConfig = require("../config/for-test");
 
-const createComponent = componentName => {
+const createComponent = (componentName, options = {}) => {
 	const { sourceRoot } = mainConfig();
 	const { readCreatedFile, removeSpaces } = textHelpers;
 	const componentPath = foldersHelpers.detectPath(sourceRoot, componentName);
-	const config = testConfig.component(componentName);
 
+	const config = testConfig.component({ component: componentName, options });
 	return helpers
 		.run(path.join(__dirname, "../generators/component"))
 		.withArguments([componentName])
+		.withOptions(options)
 		.then(dir => {
 			const content = removeSpaces(
 				readCreatedFile(
@@ -32,6 +33,7 @@ describe("generator-react-16-boilerplate:component", () => {
 	let presentationContentFromRoot;
 	let componentConfigFromRoot;
 	const componentNameFromRoot = "./components/testComponent";
+	const componentNameForAdditionalData = "./components/withAdditionalData";
 	const componentNameFromCurrent = "./currentTestComponent";
 	const { removeSpaces } = textHelpers;
 	beforeAll(() => {
@@ -44,6 +46,18 @@ describe("generator-react-16-boilerplate:component", () => {
 	it("creates files with request from root", () => {
 		const { contentFiles } = componentConfigFromRoot;
 		assert.file(contentFiles);
+	});
+
+	it("creates additional files", done => {
+		createComponent(componentNameForAdditionalData, {
+			route: "/test",
+			action: "test",
+			reducer: "test"
+		}).then(({ config }) => {
+			const { contentFiles } = config;
+			assert.file(contentFiles);
+			done();
+		});
 	});
 
 	it("creates files with request from current folder", done => {

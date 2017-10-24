@@ -1,10 +1,10 @@
 import { IReducerProvider } from '../../../utils/reducer/contracts/reducer.provider';
 import { IReducerCombiner } from '../../../utils/reducer/reducer.combiner';
-import { <%= componentName %>DataReducer } from '../reducers/data.reducer';
+import { <%= reducerName %>Reducer } from '../reducers/<%= reducerDashed %>.reducer';
 
 class <%= componentName %>ReducerProvider implements IReducerProvider {
     public register(reducerCombiner: IReducerCombiner) {
-        reducerCombiner.registerReducer('<%= componentNameCamel %>Data', <%= componentName %>DataReducer);
+        reducerCombiner.registerReducer("<%= componentName %><%= reducerName %>Reducer", <%= reducerName %>Reducer);
     }
 }
 

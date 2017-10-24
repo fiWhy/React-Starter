@@ -1,43 +1,62 @@
 const { detectPath } = require("../../helpers/folders");
 
-module.exports = function({ componentNameLower, componentFullPath, sourceRoot }) {
+module.exports = function({
+	componentNameLower,
+	options,
+	componentFullPath,
+	sourceRoot,
+	reducerDashed,
+	actionDashed
+}) {
 	const componentSrcPath = "component";
 	const componentDistPath = detectPath(sourceRoot, `${componentFullPath}/`);
 	let mainFiles = [
-		{ from: `${componentSrcPath}/index.yo.tpl`, to: `${componentDistPath}/index.tsx` },
+		{ from: `${componentSrcPath}/index.yo.ejs`, to: `${componentDistPath}/index.tsx` },
 		{
-			from: `${componentSrcPath}/index.test.yo.tpl`,
+			from: `${componentSrcPath}/index.test.yo.ejs`,
 			to: `${componentDistPath}/index.test.tsx`
 		},
 		{
-			from: `${componentSrcPath}/constants.yo.tpl`,
-			to: `${componentDistPath}/constants.ts`
-		},
-		{
-			from: `${componentSrcPath}/actions/data.action.yo.tpl`,
-			to: `${componentDistPath}/actions/data.action.ts`
-		},
-		{
-			from: `${componentSrcPath}/presentations/component-presentation.yo.tpl`,
+			from: `${componentSrcPath}/presentations/component-presentation.yo.ejs`,
 			to: `${componentDistPath}/presentations/${componentNameLower}.presentation.tsx`
 		},
 		{
-			from: `${componentSrcPath}/presentations/component-presentation.test.yo.tpl`,
+			from: `${componentSrcPath}/presentations/component-presentation.test.yo.ejs`,
 			to: `${componentDistPath}/presentations/${componentNameLower}.presentation.test.tsx`
-		},
-		{
-			from: `${componentSrcPath}/providers/reducer.provider.yo.tpl`,
-			to: `${componentDistPath}/providers/reducer.provider.ts`
-		},
-		{
-			from: `${componentSrcPath}/providers/route.provider.yo.tpl`,
-			to: `${componentDistPath}/providers/route.provider.ts`
-		},
-		{
-			from: `${componentSrcPath}/reducers/data.reducer.yo.tpl`,
-			to: `${componentDistPath}/reducers/data.reducer.ts`
 		}
 	];
+
+	if (options.route !== undefined) {
+		mainFiles = mainFiles.concat([
+			{
+				from: `${componentSrcPath}/providers/route.provider.yo.ejs`,
+				to: `${componentDistPath}/providers/route.provider.ts`
+			}
+		]);
+	}
+
+	if (options.action !== undefined) {
+		mainFiles = mainFiles.concat([
+			{
+				from: `${componentSrcPath}/actions/data.action.yo.ejs`,
+				to: `${componentDistPath}/actions/${actionDashed}.action.ts`
+			}
+		]);
+	}
+
+	if (options.reducer !== undefined) {
+		mainFiles = mainFiles.concat([
+			{
+				from: `${componentSrcPath}/reducers/data.reducer.yo.ejs`,
+				to: `${componentDistPath}/reducers/${reducerDashed}.reducer.ts`
+			},
+
+			{
+				from: `${componentSrcPath}/providers/reducer.provider.yo.ejs`,
+				to: `${componentDistPath}/providers/reducer.provider.ts`
+			}
+		]);
+	}
 
 	return mainFiles;
 };

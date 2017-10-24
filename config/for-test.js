@@ -23,7 +23,7 @@ const app = () => {
 
 module.exports.app = app;
 
-module.exports.component = function(component) {
+module.exports.component = function({ component, options }) {
 	const { sourceRoot } = mainConfig();
 	const componentName = textHelpers.nameFromPath(component);
 	const dashedComponentName = textHelpers.toDashCase(componentName);
@@ -32,19 +32,34 @@ module.exports.component = function(component) {
 		sourceRoot,
 		component
 	)}/${dashedComponentName}`;
+
+	let contentFiles = [
+		`${componentPath}/presentations/${dashedComponentName}.presentation.tsx`,
+		`${componentPath}/index.tsx`
+	];
+
+	if (options.route) {
+		contentFiles = contentFiles.concat([`${componentPath}/providers/route.provider.ts`]);
+	}
+
+	if (options.action) {
+		contentFiles = contentFiles.concat([
+			`${componentPath}/providers/reducer.provider.ts`,
+			`${componentPath}/actions/${options.action}.action.ts`
+		]);
+	}
+
+	if (options.reducer) {
+		contentFiles = contentFiles.concat([
+			`${componentPath}/reducers/${options.reducer}.reducer.ts`
+		]);
+	}
+
 	return {
 		componentName: componentName,
 		upperComponentName: genCmpName,
 		componentDashed: dashedComponentName,
-		contentFiles: [
-			`${componentPath}/presentations/${dashedComponentName}.presentation.tsx`,
-			`${componentPath}/actions/data.action.ts`,
-			`${componentPath}/providers/reducer.provider.ts`,
-			`${componentPath}/providers/route.provider.ts`,
-			`${componentPath}/reducers/data.reducer.ts`,
-			`${componentPath}/constants.ts`,
-			`${componentPath}/index.tsx`
-		]
+		contentFiles
 	};
 };
 

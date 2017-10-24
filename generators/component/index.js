@@ -2,7 +2,7 @@
 const Generator = require("yeoman-generator");
 const files = require("./files");
 const textHelpers = require("../../helpers/text");
-const { sourceRoot } = require("../../config/main")();
+const { sourceRoot, defaultActionsName } = require("../../config/main")();
 
 module.exports = class extends Generator {
 	constructor(args, opts) {
@@ -12,6 +12,16 @@ module.exports = class extends Generator {
 			type: String,
 			required: true
 		});
+
+		this.option("route", {
+			type: String
+		})
+			.option("reducer", {
+				type: String
+			})
+			.option("action", {
+				type: String
+			});
 
 		this.mergedConfig = Object.assign(
 			{
@@ -31,7 +41,7 @@ module.exports = class extends Generator {
 			nameFromPath,
 			folderPath
 		} = textHelpers;
-		const { componentName: nameWithPath } = this.options;
+		const { componentName: nameWithPath, route, action, reducer } = this.options;
 		const componentName = nameFromPath(nameWithPath);
 		let props = {};
 		props.componentNameLower = toDashCase(componentName);
@@ -39,11 +49,36 @@ module.exports = class extends Generator {
 		props.componentName = genComponentName(componentName);
 		props.upperComponentName = props.componentName.toUpperCase();
 		props.componentFullPath = `${folderPath(nameWithPath)}/${props.componentNameLower}`;
+
+		if (route === undefined) {
+			props.route = null;
+		} else {
+			props.route = route ? route : `/${props.componentNameLower}`;
+		}
+
+		if (action === undefined) {
+			props.action = null;
+		} else {
+			props.action = action ? action : defaultActionsName;
+			props.actionName = genComponentName(props.action);
+			props.actionDashed = toDashCase(props.action);
+		}
+
+		if (reducer === undefined) {
+			props.reducer = null;
+		} else {
+			props.reducer = reducer ? reducer : defaultActionsName;
+			props.reducerName = genComponentName(props.reducer);
+			props.reducerDashed = toDashCase(props.reducer);
+		}
+
 		this.props = props;
 	}
 
 	writing() {
-		files(Object.assign(this.props, this.mergedConfig)).forEach(file => {
+		files(
+			Object.assign(this.props, { options: this.options }, this.mergedConfig)
+		).forEach(file => {
 			this.fs.copyTpl(
 				this.templatePath(file.from),
 				this.destinationPath(file.to),

@@ -1,5 +1,6 @@
 module.exports = () => {
 	return {
-		sourceRoot: "src"
+		sourceRoot: "src",
+		defaultActionsName: "data"
 	};
 };

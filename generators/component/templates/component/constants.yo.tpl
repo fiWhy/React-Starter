@@ -1,1 +1,0 @@
-export const <%= upperComponentName %>_CONST = '<%= upperComponentName %>_CONST';

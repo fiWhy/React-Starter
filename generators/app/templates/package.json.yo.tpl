@@ -24,6 +24,7 @@
       "react-router": "^4.2.0",
       "react-router-dom": "^4.2.2",
       "redux": "^3.6.0",
+      "redux-act-async": "^1.7.0",
       "redux-thunk": "^2.1.0"<% if(styledComponents) { %>,
       "styled-components": "^2.2.1"<% } %>
     },
