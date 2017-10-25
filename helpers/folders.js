@@ -17,14 +17,14 @@ const rmdir = path => {
 	}
 };
 
-module.exports.detectPath = (base, input) => {
+module.exports.detectPath = (base, input, empty = componentsRoot) => {
 	const folder = folderPath(input);
 	const cwd = process.cwd();
 	const lastIndexOfBase = cwd.lastIndexOf(base);
 	const stdCwd = lastIndexOfBase > -1 ? cwd.slice(lastIndexOfBase) : base;
 	return folder[0] === "."
 		? join(stdCwd, folder)
-		: folder ? join(base, folder) : join(base, componentsRoot);
+		: folder ? join(base, folder) : join(base, empty);
 };
 
 module.exports.rmdir = rmdir;

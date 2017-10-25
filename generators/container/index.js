@@ -80,7 +80,10 @@ module.exports = class extends Generator {
 	}
 
 	generatePresentation() {
-		console.log("Generate presentation");
+		const { clearComponentName } = this.props;
+		this.composeWith(require.resolve("../presentation"), {
+			arguments: [`${clearComponentName}/presentations/${clearComponentName}`]
+		});
 	}
 
 	writing() {

@@ -26,12 +26,9 @@ module.exports.app = app;
 module.exports.component = function({ component, options }) {
 	const { sourceRoot } = mainConfig();
 	let preparations = textHelpers.componentNamePreparation(component);
-	const { componentDashed } = preparations;
+	const { dashed } = preparations;
 
-	const componentPath = `${foldersConfig.detectPath(
-		sourceRoot,
-		component
-	)}/${componentDashed}`;
+	const componentPath = `${foldersConfig.detectPath(sourceRoot, component)}/${dashed}`;
 
 	let contentFiles = [`${componentPath}/index.tsx`];
 
@@ -63,16 +60,12 @@ module.exports.component = function({ component, options }) {
 module.exports.presentation = component => {
 	const { sourceRoot } = mainConfig();
 	let preparations = textHelpers.componentNamePreparation(component);
-	const { componentDashed } = preparations;
-
-	const componentPath = `${foldersConfig.detectPath(
-		sourceRoot,
-		component
-	)}/${componentDashed}`;
+	const { dashed } = preparations;
+	const componentPath = `${foldersConfig.detectPath(sourceRoot, component)}`;
 
 	let contentFiles = [
-		`${componentPath}/${componentDashed}.presentation.tsx`,
-		`${componentPath}/${componentDashed}.presentation.test.tsx`
+		`${componentPath}/${dashed}.presentation.tsx`,
+		`${componentPath}/${dashed}.presentation.test.tsx`
 	];
 
 	return Object.assign(
@@ -85,15 +78,9 @@ module.exports.presentation = component => {
 
 module.exports.presentationTemplate = function(withStyledComponents, component) {
 	return `import * as React from "react";
-    import { Link } from "react-router-dom";
     
     const ${component}Presentation = () => (
-          <div>
-            <h2>${component}</h2>
-            <div>
-              ${component} works!
-            </div>
-          </div>
+          <div>${component} works!</div>
     );
     
     export default ${component}Presentation;

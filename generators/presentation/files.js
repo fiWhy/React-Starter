@@ -1,15 +1,21 @@
 const { detectPath } = require("../../helpers/folders");
+const { folderPath } = require("../../helpers/text");
+const mainConfig = require("../../config/main");
 
-module.exports = function({ componentNameLower, sourceRoot }) {
-	const componentSrcPath = "component";
-	const componentDistPath = detectPath(sourceRoot, `${componentNameLower}/`);
+module.exports = function({ componentNameLower }) {
+	const { sourceRoot } = mainConfig();
+	const componentDistPath = detectPath(
+		sourceRoot,
+		`${folderPath(componentNameLower)}`,
+		""
+	);
 	let mainFiles = [
 		{
-			from: `${componentSrcPath}/component-presentation.yo.tpl`,
+			from: `component-presentation.yo.ejs`,
 			to: `${componentDistPath}/${componentNameLower}.presentation.tsx`
 		},
 		{
-			from: `${componentSrcPath}/component-presentation.test.yo.tpl`,
+			from: `component-presentation.test.yo.ejs`,
 			to: `${componentDistPath}/${componentNameLower}.presentation.test.tsx`
 		}
 	];

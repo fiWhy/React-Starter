@@ -26,7 +26,6 @@ module.exports = class extends Generator {
 	initializing() {
 		const { componentName } = this.options;
 		const { componentNamePreparation } = textHelpers;
-		console.log("++COMPONENT++", componentName);
 		const { dashed, upperCamel, upper, camel } = componentNamePreparation(componentName);
 		let props = {};
 		props.componentNameLower = dashed;

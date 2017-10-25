@@ -4,32 +4,29 @@ var assert = require("yeoman-assert");
 var helpers = require("yeoman-test");
 var testConfig = require("../config/for-test");
 
-const createComponent = (componentName, options = {}) => {
-	const config = testConfig.component({ component: componentName, options });
+const createComponent = (component, options = {}) => {
+	const config = testConfig.component({ component, options });
 	return helpers
 		.run(path.join(__dirname, "../generators/container"))
-		.withArguments([componentName])
+		.withArguments([component])
 		.withOptions(options)
 		.then(() => {
 			return config;
 		});
 };
 
-describe("generator-react-16-boilerplate:component", () => {
-	let componentConfigFromRoot;
+describe("generator-react-16-boilerplate:container", () => {
 	const componentNameFromRoot = "./components/testComponent";
 	const componentNameForAdditionalData = "./components/withAdditionalData";
 	const componentNameWithoutFolder = "testComponentWithoutFolder";
 	const componentNameFromCurrent = "./currentTestComponent";
-	beforeAll(() => {
-		return createComponent(componentNameFromRoot).then(config => {
-			componentConfigFromRoot = config;
-		});
-	});
 
-	it("creates files with request from root", () => {
-		const { contentFiles } = componentConfigFromRoot;
-		assert.file(contentFiles);
+	it("creates files with request from root", done => {
+		createComponent(componentNameFromRoot).then(config => {
+			const { contentFiles } = config;
+			assert.file(contentFiles);
+			done();
+		});
 	});
 
 	it("creates additional files", done => {
