@@ -1,17 +1,15 @@
 "use strict";
-var path = require("path");
-var assert = require("yeoman-assert");
-var helpers = require("yeoman-test");
-var textHelpers = require("../helpers/text");
-var mainConfig = require("../config/main");
-var testConfig = require("../config/for-test");
+const path = require("path");
+const assert = require("yeoman-assert");
+const helpers = require("yeoman-test");
+const mainConfig = require("../config/main");
+const testConfig = require("../config/for-test");
+const textHelpers = require("../helpers/text");
 
 describe("generator-react-16-boilerplate:app", () => {
-	var dashboardPresentationContent;
-	var homePresentationContent;
-	var packageJson;
-	var { readCreatedFile, removeSpaces } = textHelpers;
+	let packageJson;
 	const { sourceRoot } = mainConfig();
+	const { readCreatedFile } = textHelpers;
 	const {
 		projectName,
 		projectDescription,
@@ -20,7 +18,6 @@ describe("generator-react-16-boilerplate:app", () => {
 		withAdditionalFiles
 	} = testConfig.app();
 
-	const { presentationTemplate } = testConfig;
 	beforeAll(() => {
 		return helpers
 			.run(path.join(__dirname, "../generators/app"))
@@ -34,18 +31,6 @@ describe("generator-react-16-boilerplate:app", () => {
 				sourceRoot
 			})
 			.then(dir => {
-				dashboardPresentationContent = removeSpaces(
-					readCreatedFile(
-						dir,
-						`./${sourceRoot}/components/dashboard/presentations/dashboard.presentation.tsx`
-					)
-				);
-				homePresentationContent = removeSpaces(
-					readCreatedFile(
-						dir,
-						`./${sourceRoot}/components/home/presentations/home.presentation.tsx`
-					)
-				);
 				packageJson = JSON.parse(readCreatedFile(dir, "./package.json"));
 			});
 	});
@@ -56,15 +41,5 @@ describe("generator-react-16-boilerplate:app", () => {
 
 	it("puts styled-components in dependencies", () => {
 		assert.equal(Boolean(packageJson.dependencies["styled-components"]), true);
-	});
-
-	it("generates presentation for dashboard with styled-components", () => {
-		var presentationContent = presentationTemplate(true, "Dashboard");
-		assert.equal(dashboardPresentationContent, removeSpaces(presentationContent));
-	});
-
-	it("generates presentation for home with styled-components", () => {
-		var presentationContent = presentationTemplate(true, "Home");
-		assert.equal(homePresentationContent, removeSpaces(presentationContent));
 	});
 });

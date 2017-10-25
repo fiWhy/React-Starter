@@ -3,30 +3,24 @@ const { detectPath } = require("../../helpers/folders");
 module.exports = function({
 	componentNameLower,
 	options,
-	componentFullPath,
+	clearComponentName,
 	sourceRoot,
 	reducerDashed,
 	actionDashed
 }) {
 	const componentSrcPath = "component";
-	const componentDistPath = detectPath(sourceRoot, `${componentFullPath}/`);
+	const componentDistPath = `${detectPath(
+		sourceRoot,
+		clearComponentName
+	)}/${componentNameLower}`;
 	let mainFiles = [
 		{ from: `${componentSrcPath}/index.yo.ejs`, to: `${componentDistPath}/index.tsx` },
 		{
 			from: `${componentSrcPath}/index.test.yo.ejs`,
 			to: `${componentDistPath}/index.test.tsx`
-		},
-		{
-			from: `${componentSrcPath}/presentations/component-presentation.yo.ejs`,
-			to: `${componentDistPath}/presentations/${componentNameLower}.presentation.tsx`
-		},
-		{
-			from: `${componentSrcPath}/presentations/component-presentation.test.yo.ejs`,
-			to: `${componentDistPath}/presentations/${componentNameLower}.presentation.test.tsx`
 		}
 	];
-
-	if (options.route !== undefined) {
+	if (options.route) {
 		mainFiles = mainFiles.concat([
 			{
 				from: `${componentSrcPath}/providers/route.provider.yo.ejs`,
@@ -35,7 +29,7 @@ module.exports = function({
 		]);
 	}
 
-	if (options.action !== undefined) {
+	if (options.action) {
 		mainFiles = mainFiles.concat([
 			{
 				from: `${componentSrcPath}/actions/data.action.yo.ejs`,
@@ -44,7 +38,7 @@ module.exports = function({
 		]);
 	}
 
-	if (options.reducer !== undefined) {
+	if (options.reducer) {
 		mainFiles = mainFiles.concat([
 			{
 				from: `${componentSrcPath}/reducers/data.reducer.yo.ejs`,

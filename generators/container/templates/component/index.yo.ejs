@@ -17,18 +17,17 @@ class <%= componentName %> extends React.Component<any, any>{
     render() {
         return <<%= componentName %>Presentation/>;
     }
-}
-
+}<% if(reducer) { %>
 const mapStateToProps = (state) => {
     return {
-        <% if(reducer) { %><%= reducer %>: state.<%= componentName %><%= reducerName %>Reducer<% } %>
+        <%= reducer %>: state.<%= componentName %><%= reducerName %>Reducer
     }
-}
-
+}<% } %>
+<% if(action && reducer) { %>
 const mapDispatchToProps = (dispatch) => {
     return {
-        <% if(action) { %><%= actionName %>: () => dispatch(<%= actionName %>Action())<% } %>
+        <%= actionName %>: () => dispatch(<%= actionName %>Action())
     }
-}
+}<% } %>
 
-export default <% if(route) { %>withRouter(<% } %>connect(mapStateToProps, mapDispatchToProps)(<%= componentName %>)<% if(route) { %>);<% } %>
+export default <% if(route) { %>withRouter(<% } %>connect(<% if(action && reducer) { %>mapStateToProps, mapDispatchToProps<% } %>)(<%= componentName %>)<% if(route) { %>);<% } %>

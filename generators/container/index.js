@@ -2,6 +2,7 @@
 const Generator = require("yeoman-generator");
 const files = require("./files");
 const textHelpers = require("../../helpers/text");
+const { isBooleanName } = require("../../helpers/types");
 const { sourceRoot, defaultActionsName } = require("../../config/main")();
 
 module.exports = class extends Generator {
@@ -34,45 +35,52 @@ module.exports = class extends Generator {
 	}
 
 	initializing() {
+		const { componentName, route, action, reducer } = this.options;
 		const {
-			toDashCase,
+			componentNamePreparation,
 			genComponentName,
-			toCamelCase,
-			nameFromPath,
+			toDashCase,
 			folderPath
 		} = textHelpers;
-		const { componentName: nameWithPath, route, action, reducer } = this.options;
-		const componentName = nameFromPath(nameWithPath);
-		let props = {};
-		props.componentNameLower = toDashCase(componentName);
-		props.componentNameCamel = toCamelCase(componentName);
-		props.componentName = genComponentName(componentName);
-		props.upperComponentName = props.componentName.toUpperCase();
-		props.componentFullPath = `${folderPath(nameWithPath)}/${props.componentNameLower}`;
+		const { setted, dashed, upperCamel, upper, camel } = componentNamePreparation(
+			componentName
+		);
 
-		if (route === undefined) {
-			props.route = null;
+		let props = {};
+		props.clearComponentName = componentName;
+		props.componentNameLower = dashed;
+		props.componentNameCamel = camel;
+		props.componentName = upperCamel;
+		props.upperComponentName = upper;
+		props.componentFullPath = `${folderPath(setted)}/${props.componentNameLower}`;
+
+		if (route) {
+			props.route = isBooleanName(route) ? `/${props.componentNameLower}` : route;
 		} else {
-			props.route = route ? route : `/${props.componentNameLower}`;
+			props.route = null;
 		}
 
-		if (action === undefined) {
-			props.action = null;
-		} else {
-			props.action = action ? action : defaultActionsName;
+		if (action) {
+			props.action = isBooleanName(action) ? defaultActionsName : action;
 			props.actionName = genComponentName(props.action);
 			props.actionDashed = toDashCase(props.action);
+		} else {
+			props.action = null;
 		}
 
-		if (reducer === undefined) {
-			props.reducer = null;
-		} else {
-			props.reducer = reducer ? reducer : defaultActionsName;
+		if (reducer) {
+			props.reducer = isBooleanName(reducer) ? defaultActionsName : reducer;
 			props.reducerName = genComponentName(props.reducer);
 			props.reducerDashed = toDashCase(props.reducer);
+		} else {
+			props.reducer = null;
 		}
 
 		this.props = props;
+	}
+
+	generatePresentation() {
+		console.log("Generate presentation");
 	}
 
 	writing() {

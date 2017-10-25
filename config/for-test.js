@@ -25,42 +25,62 @@ module.exports.app = app;
 
 module.exports.component = function({ component, options }) {
 	const { sourceRoot } = mainConfig();
-	const componentName = textHelpers.nameFromPath(component);
-	const dashedComponentName = textHelpers.toDashCase(componentName);
-	const genCmpName = textHelpers.genComponentName(componentName);
+	let preparations = textHelpers.componentNamePreparation(component);
+	const { componentDashed } = preparations;
+
 	const componentPath = `${foldersConfig.detectPath(
 		sourceRoot,
 		component
-	)}/${dashedComponentName}`;
+	)}/${componentDashed}`;
 
-	let contentFiles = [
-		`${componentPath}/presentations/${dashedComponentName}.presentation.tsx`,
-		`${componentPath}/index.tsx`
-	];
+	let contentFiles = [`${componentPath}/index.tsx`];
 
-	if (options.route) {
+	if (options && options.route) {
 		contentFiles = contentFiles.concat([`${componentPath}/providers/route.provider.ts`]);
 	}
 
-	if (options.action) {
+	if (options && options.action) {
 		contentFiles = contentFiles.concat([
 			`${componentPath}/providers/reducer.provider.ts`,
 			`${componentPath}/actions/${options.action}.action.ts`
 		]);
 	}
 
-	if (options.reducer) {
+	if (options && options.reducer) {
 		contentFiles = contentFiles.concat([
 			`${componentPath}/reducers/${options.reducer}.reducer.ts`
 		]);
 	}
 
-	return {
-		componentName: componentName,
-		upperComponentName: genCmpName,
-		componentDashed: dashedComponentName,
-		contentFiles
-	};
+	return Object.assign(
+		{
+			contentFiles
+		},
+		preparations
+	);
+};
+
+module.exports.presentation = component => {
+	const { sourceRoot } = mainConfig();
+	let preparations = textHelpers.componentNamePreparation(component);
+	const { componentDashed } = preparations;
+
+	const componentPath = `${foldersConfig.detectPath(
+		sourceRoot,
+		component
+	)}/${componentDashed}`;
+
+	let contentFiles = [
+		`${componentPath}/${componentDashed}.presentation.tsx`,
+		`${componentPath}/${componentDashed}.presentation.test.tsx`
+	];
+
+	return Object.assign(
+		{
+			contentFiles
+		},
+		preparations
+	);
 };
 
 module.exports.presentationTemplate = function(withStyledComponents, component) {

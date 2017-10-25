@@ -2,43 +2,27 @@
 var path = require("path");
 var assert = require("yeoman-assert");
 var helpers = require("yeoman-test");
-var foldersHelpers = require("../helpers/folders");
-var textHelpers = require("../helpers/text");
-var mainConfig = require("../config/main");
 var testConfig = require("../config/for-test");
 
 const createComponent = (componentName, options = {}) => {
-	const { sourceRoot } = mainConfig();
-	const { readCreatedFile, removeSpaces } = textHelpers;
-	const componentPath = foldersHelpers.detectPath(sourceRoot, componentName);
-
 	const config = testConfig.component({ component: componentName, options });
 	return helpers
-		.run(path.join(__dirname, "../generators/component"))
+		.run(path.join(__dirname, "../generators/container"))
 		.withArguments([componentName])
 		.withOptions(options)
-		.then(dir => {
-			const content = removeSpaces(
-				readCreatedFile(
-					dir,
-					`${componentPath}/${config.componentDashed}/presentations/${config.componentDashed}.presentation.tsx`
-				)
-			);
-			return { content, config };
+		.then(() => {
+			return config;
 		});
 };
 
 describe("generator-react-16-boilerplate:component", () => {
-	var { presentationTemplate } = testConfig;
-	let presentationContentFromRoot;
 	let componentConfigFromRoot;
 	const componentNameFromRoot = "./components/testComponent";
 	const componentNameForAdditionalData = "./components/withAdditionalData";
+	const componentNameWithoutFolder = "testComponentWithoutFolder";
 	const componentNameFromCurrent = "./currentTestComponent";
-	const { removeSpaces } = textHelpers;
 	beforeAll(() => {
-		return createComponent(componentNameFromRoot).then(({ content, config }) => {
-			presentationContentFromRoot = content;
+		return createComponent(componentNameFromRoot).then(config => {
 			componentConfigFromRoot = config;
 		});
 	});
@@ -53,24 +37,42 @@ describe("generator-react-16-boilerplate:component", () => {
 			route: "/test",
 			action: "test",
 			reducer: "test"
-		}).then(({ config }) => {
+		}).then(config => {
 			const { contentFiles } = config;
 			assert.file(contentFiles);
+			done();
+		});
+	});
+
+	it("creates additional files with boolean options", done => {
+		createComponent(componentNameForAdditionalData, {
+			route: true,
+			action: true,
+			reducer: true
+		}).then(config => {
+			const { componentPath } = config;
+			const noFiles = [
+				`${componentPath}/actions/true.action.tsx`,
+				`${componentPath}/reducers/true.reducer.tsx`
+			];
+			assert.noFile(noFiles);
 			done();
 		});
 	});
 
 	it("creates files with request from current folder", done => {
-		createComponent(componentNameFromCurrent).then(({ config }) => {
+		createComponent(componentNameFromCurrent).then(config => {
 			const { contentFiles } = config;
 			assert.file(contentFiles);
 			done();
 		});
 	});
 
-	it("generates presentation for component", () => {
-		const { upperComponentName } = componentConfigFromRoot;
-		var presentationContent = presentationTemplate(true, upperComponentName);
-		assert.equal(presentationContentFromRoot, removeSpaces(presentationContent));
+	it("creates files with request without folder", done => {
+		createComponent(componentNameWithoutFolder).then(config => {
+			const { contentFiles } = config;
+			assert.file(contentFiles);
+			done();
+		});
 	});
 });

@@ -30,7 +30,7 @@ module.exports = class extends Generator {
 		};
 		if (starterData) {
 			this.composeWith(
-				require.resolve("../component"),
+				require.resolve("../container"),
 				Object.assign(
 					{
 						arguments: ["components/home"]
@@ -39,7 +39,7 @@ module.exports = class extends Generator {
 				)
 			);
 			this.composeWith(
-				require.resolve("../component"),
+				require.resolve("../container"),
 				Object.assign(
 					{
 						arguments: ["components/dashboard"]
