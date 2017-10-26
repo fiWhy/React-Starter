@@ -1,17 +1,14 @@
 const { detectPath } = require("../../helpers/folders");
 
 module.exports = function({
-	componentNameLower,
+	dashed,
 	options,
-	clearComponentName,
+	path,
 	sourceRoot,
 	reducerDashed,
 	actionDashed
 }) {
-	const componentDistPath = `${detectPath(
-		sourceRoot,
-		clearComponentName
-	)}/${componentNameLower}`;
+	const componentDistPath = `${detectPath(sourceRoot, path)}/${dashed}`;
 	let mainFiles = [
 		{ from: "index.yo.ejs", to: `${componentDistPath}/index.tsx` },
 		{

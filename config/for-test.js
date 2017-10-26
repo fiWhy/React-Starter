@@ -24,12 +24,11 @@ const app = () => {
 module.exports.app = app;
 
 module.exports.component = function({ component, options }) {
+	const preparations = textHelpers.componentNamePreparation(component);
 	const { sourceRoot } = mainConfig();
-	let preparations = textHelpers.componentNamePreparation(component);
 	const { dashed } = preparations;
 
 	const componentPath = `${foldersConfig.detectPath(sourceRoot, component)}/${dashed}`;
-
 	let contentFiles = [`${componentPath}/index.tsx`];
 
 	if (options && options.route) {

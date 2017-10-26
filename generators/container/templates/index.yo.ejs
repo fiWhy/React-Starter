@@ -2,11 +2,11 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 <% if(route) { %>import { withRouter } from "react-router-dom";<% } %>
 import { connect } from "react-redux";
-<% if(action) { %>import { <%= actionName %>Action } from "./actions/<%= actionDashed %>.action";<% } %>
+<% if(action) { %>import { <%= action.upperCamel %>Action } from "./actions/<%= actionDashed %>.action";<% } %>
 
-import <%= componentName %>Presentation from "./presentations/<%= componentNameLower %>.presentation";
+import <%= component.upperCamel %>Presentation from "./presentations/<%= component.dashed %>.presentation";
 
-class <%= componentName %> extends React.Component<any, any>{
+class <%= component.upperCamel %> extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
     }
@@ -15,19 +15,19 @@ class <%= componentName %> extends React.Component<any, any>{
     }
     
     render() {
-        return <<%= componentName %>Presentation/>;
+        return <<%= component.upperCamel %>Presentation/>;
     }
 }<% if(reducer) { %>
 const mapStateToProps = (state) => {
     return {
-        <%= reducer %>: state.<%= componentName %><%= reducerName %>Reducer
+        <%= reducer %>: state.<%= component.upperCamel %><%= reducer.upperCamel %>Reducer
     }
 }<% } %>
 <% if(action && reducer) { %>
 const mapDispatchToProps = (dispatch) => {
     return {
-        <%= actionName %>: () => dispatch(<%= actionName %>Action())
+        <%= actionName %>: () => dispatch(<%= action.upperCamel %>Action())
     }
 }<% } %>
 
-export default <% if(route) { %>withRouter(<% } %>connect(<% if(action && reducer) { %>mapStateToProps, mapDispatchToProps<% } %>)(<%= componentName %>)<% if(route) { %>);<% } %>
+export default <% if(route) { %>withRouter(<% } %>connect(<% if(action && reducer) { %>mapStateToProps, mapDispatchToProps<% } %>)(<%= component.upperCamel %>)<% if(route) { %>);<% } %>

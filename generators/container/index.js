@@ -35,54 +35,50 @@ module.exports = class extends Generator {
 	}
 
 	initializing() {
-		const { componentName, route, action, reducer } = this.options;
-		const {
-			componentNamePreparation,
-			genComponentName,
-			toDashCase,
-			folderPath
-		} = textHelpers;
-		const { setted, dashed, upperCamel, upper, camel } = componentNamePreparation(
-			componentName
-		);
+		const { componentName } = this.options;
+		const { componentNamePreparation } = textHelpers;
+		const preparation = componentNamePreparation(componentName);
+		this.props = { component: preparation };
+	}
 
-		let props = {};
-		props.clearComponentName = componentName;
-		props.componentNameLower = dashed;
-		props.componentNameCamel = camel;
-		props.componentName = upperCamel;
-		props.upperComponentName = upper;
-		props.componentFullPath = `${folderPath(setted)}/${props.componentNameLower}`;
+	joinPropSettings() {
+		const { componentNamePreparation } = textHelpers;
+		const { route, action, reducer } = this.options;
+		const { component: { dashed } } = this.props;
+		const propsAdditional = { action: null, reducer: null, route: null };
 
 		if (route) {
-			props.route = isBooleanName(route) ? `/${props.componentNameLower}` : route;
-		} else {
-			props.route = null;
+			propsAdditional.route.value = isBooleanName(route) ? `/${dashed}` : route;
 		}
 
 		if (action) {
-			props.action = isBooleanName(action) ? defaultActionsName : action;
-			props.actionName = genComponentName(props.action);
-			props.actionDashed = toDashCase(props.action);
-		} else {
-			props.action = null;
+			const value = isBooleanName(action) ? defaultActionsName : action;
+			propsAdditional.action = Object.assign(
+				propsAdditional.action,
+				{
+					value
+				},
+				componentNamePreparation(value)
+			);
 		}
 
 		if (reducer) {
-			props.reducer = isBooleanName(reducer) ? defaultActionsName : reducer;
-			props.reducerName = genComponentName(props.reducer);
-			props.reducerDashed = toDashCase(props.reducer);
-		} else {
-			props.reducer = null;
+			const value = isBooleanName(reducer) ? defaultActionsName : reducer;
+			this.props.reducer = Object.assign(
+				{
+					value
+				},
+				componentNamePreparation(value)
+			);
 		}
 
-		this.props = props;
+		Object.assign(this.props, propsAdditional);
 	}
 
 	generatePresentation() {
-		const { clearComponentName } = this.props;
+		const { component: { path, name } } = this.props;
 		this.composeWith(require.resolve("../presentation"), {
-			arguments: [`${clearComponentName}/presentations/${clearComponentName}`]
+			arguments: [`${path}/presentations/${name}`]
 		});
 	}
 
