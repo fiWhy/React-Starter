@@ -1,4 +1,4 @@
-<% if(action) { %>import { <%= action.upperCamel %>Action } from "../actions/<%= actionDashed %>.action";
+<% if(action) { %>import { <%= action.upperCamel %>Action } from "../actions/<%= action.dashed %>.action";
 import { createReducerAsync } from "redux-act-async";<% } %>
 export const <%= reducer.upperCamel %>Reducer = <% if(action) { %>createReducerAsync(<%= action.upperCamel %>Action);<% } else { %>(state =  [], action) => {
     return state;

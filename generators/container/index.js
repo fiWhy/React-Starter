@@ -48,13 +48,15 @@ module.exports = class extends Generator {
 		const propsAdditional = { action: null, reducer: null, route: null };
 
 		if (route) {
-			propsAdditional.route.value = isBooleanName(route) ? `/${dashed}` : route;
+			const value = isBooleanName(route) ? `/${dashed}` : route;
+			propsAdditional.route = {
+				value
+			};
 		}
 
 		if (action) {
 			const value = isBooleanName(action) ? defaultActionsName : action;
 			propsAdditional.action = Object.assign(
-				propsAdditional.action,
 				{
 					value
 				},
@@ -64,7 +66,7 @@ module.exports = class extends Generator {
 
 		if (reducer) {
 			const value = isBooleanName(reducer) ? defaultActionsName : reducer;
-			this.props.reducer = Object.assign(
+			propsAdditional.reducer = Object.assign(
 				{
 					value
 				},
@@ -76,9 +78,9 @@ module.exports = class extends Generator {
 	}
 
 	generatePresentation() {
-		const { component: { path, name } } = this.props;
+		const { component: { name, fullPath } } = this.props;
 		this.composeWith(require.resolve("../presentation"), {
-			arguments: [`${path}/presentations/${name}`]
+			arguments: [`${fullPath}/presentations/${name}`]
 		});
 	}
 

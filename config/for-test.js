@@ -1,5 +1,6 @@
 const textHelpers = require("../helpers/text");
 const foldersConfig = require("../helpers/folders");
+const { isBooleanName } = require("../helpers/types");
 const mainConfig = require("./main");
 const app = () => {
 	const { sourceRoot } = mainConfig();
@@ -23,27 +24,26 @@ const app = () => {
 
 module.exports.app = app;
 
-module.exports.component = function({ component, options }) {
+module.exports.component = function({ component, options = {} }) {
 	const preparations = textHelpers.componentNamePreparation(component);
 	const { sourceRoot } = mainConfig();
-	const { dashed } = preparations;
+	const { dashed, fullPath } = preparations;
 
-	const componentPath = `${foldersConfig.detectPath(sourceRoot, component)}/${dashed}`;
+	const componentPath = `${foldersConfig.detectPath(sourceRoot, fullPath)}/${dashed}`;
 	let contentFiles = [`${componentPath}/index.tsx`];
 
-	if (options && options.route) {
+	if (options.route && !isBooleanName(options.route)) {
 		contentFiles = contentFiles.concat([`${componentPath}/providers/route.provider.ts`]);
 	}
 
-	if (options && options.action) {
+	if (options.action && !isBooleanName(options.action)) {
 		contentFiles = contentFiles.concat([
-			`${componentPath}/providers/reducer.provider.ts`,
 			`${componentPath}/actions/${options.action}.action.ts`
 		]);
 	}
-
-	if (options && options.reducer) {
+	if (options.reducer && !isBooleanName(options.reducer)) {
 		contentFiles = contentFiles.concat([
+			`${componentPath}/providers/reducer.provider.ts`,
 			`${componentPath}/reducers/${options.reducer}.reducer.ts`
 		]);
 	}
@@ -59,9 +59,8 @@ module.exports.component = function({ component, options }) {
 module.exports.presentation = component => {
 	const { sourceRoot } = mainConfig();
 	let preparations = textHelpers.componentNamePreparation(component);
-	const { dashed } = preparations;
-	const componentPath = `${foldersConfig.detectPath(sourceRoot, component)}`;
-
+	const { dashed, fullPath } = preparations;
+	const componentPath = foldersConfig.detectPath(sourceRoot, fullPath);
 	let contentFiles = [
 		`${componentPath}/${dashed}.presentation.tsx`,
 		`${componentPath}/${dashed}.presentation.test.tsx`

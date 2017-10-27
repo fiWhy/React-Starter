@@ -1,16 +1,16 @@
 var fs = require("fs");
 var path = require("path");
 
-const removeSpaces = function(string) {
-	return string.replace(/\s/g, "");
+const removeSpaces = input => {
+	return input.replace(/\s/g, "");
 };
 
-const dashToUpper = string => {
-	return removeSpaces(string).replace(/(-[A-Za-z0-9])/g, g => `${g[1].toUpperCase()}`);
+const dashToUpper = input => {
+	return removeSpaces(input).replace(/(-[A-Za-z0-9])/g, g => `${g[1].toUpperCase()}`);
 };
 
 const standardSlash = input => {
-	return input.replace(new RegExp(/\\/, "g"), "/");
+	return input ? input.replace(new RegExp(/\\/, "g"), "/") : "";
 };
 
 const nameFromPath = input => {

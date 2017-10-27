@@ -1,5 +1,5 @@
 import { createActionAsync } from "redux-act-async";
 
-export const <%= actionName %>Action = createActionAsync("<%= actionName %>Action", () =>{
-    return Promise.resolve("<%= actionName %>Action");
+export const <%= action.upperCamel %>Action = createActionAsync("<%= action.upperCamel %>Action", () =>{
+    return Promise.resolve("<%= action.upperCamel %>Action");
 })

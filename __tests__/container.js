@@ -4,7 +4,7 @@ var assert = require("yeoman-assert");
 var helpers = require("yeoman-test");
 var testConfig = require("../config/for-test");
 
-const createComponent = (component, options = {}) => {
+const createComponent = (component, options = []) => {
 	const config = testConfig.component({ component, options });
 	return helpers
 		.run(path.join(__dirname, "../generators/container"))
@@ -18,6 +18,8 @@ const createComponent = (component, options = {}) => {
 describe("generator-react-16-boilerplate:container", () => {
 	const componentNameFromRoot = "./components/testComponent";
 	const componentNameForAdditionalData = "./components/withAdditionalData";
+	const componentNameForAdditionalDataNoOptions =
+		"./components/withAdditionalDataNoOptions";
 	const componentNameWithoutFolder = "testComponentWithoutFolder";
 	const componentNameFromCurrent = "./currentTestComponent";
 
@@ -42,7 +44,7 @@ describe("generator-react-16-boilerplate:container", () => {
 	});
 
 	it("creates additional files with boolean options", done => {
-		createComponent(componentNameForAdditionalData, {
+		createComponent(componentNameForAdditionalDataNoOptions, {
 			route: true,
 			action: true,
 			reducer: true

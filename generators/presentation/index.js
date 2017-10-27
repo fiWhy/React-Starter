@@ -25,7 +25,6 @@ module.exports = class extends Generator {
 
 	initializing() {
 		const { componentName } = this.options;
-		console.log(componentName);
 		const { componentNamePreparation } = textHelpers;
 		this.props = componentNamePreparation(componentName);
 	}

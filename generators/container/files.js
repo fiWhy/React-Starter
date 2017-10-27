@@ -1,14 +1,10 @@
 const { detectPath } = require("../../helpers/folders");
 
-module.exports = function({
-	dashed,
-	options,
-	path,
-	sourceRoot,
-	reducerDashed,
-	actionDashed
-}) {
-	const componentDistPath = `${detectPath(sourceRoot, path)}/${dashed}`;
+module.exports = function({ component, action, reducer, route, sourceRoot }) {
+	const componentDistPath = `${detectPath(
+		sourceRoot,
+		component.fullPath
+	)}/${component.dashed}`;
 	let mainFiles = [
 		{ from: "index.yo.ejs", to: `${componentDistPath}/index.tsx` },
 		{
@@ -16,7 +12,7 @@ module.exports = function({
 			to: `${componentDistPath}/index.test.tsx`
 		}
 	];
-	if (options.route) {
+	if (route) {
 		mainFiles = mainFiles.concat([
 			{
 				from: "providers/route.provider.yo.ejs",
@@ -25,20 +21,20 @@ module.exports = function({
 		]);
 	}
 
-	if (options.action) {
+	if (action) {
 		mainFiles = mainFiles.concat([
 			{
 				from: "actions/data.action.yo.ejs",
-				to: `${componentDistPath}/actions/${actionDashed}.action.ts`
+				to: `${componentDistPath}/actions/${action.dashed}.action.ts`
 			}
 		]);
 	}
 
-	if (options.reducer) {
+	if (reducer) {
 		mainFiles = mainFiles.concat([
 			{
 				from: "reducers/data.reducer.yo.ejs",
-				to: `${componentDistPath}/reducers/${reducerDashed}.reducer.ts`
+				to: `${componentDistPath}/reducers/${reducer.dashed}.reducer.ts`
 			},
 
 			{
@@ -47,6 +43,5 @@ module.exports = function({
 			}
 		]);
 	}
-
 	return mainFiles;
 };
