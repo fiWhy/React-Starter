@@ -23,7 +23,7 @@ const createReducer = (reducer, options = {}) => {
 		});
 };
 
-describe("generator-react-16-boilerplate:reducer", () => {
+describe("generator-react-skeleton:reducer", () => {
 	const reducer = "./data";
 	const defaultReducer = "dataTest";
 	const { removeSpaces } = textHelpers;

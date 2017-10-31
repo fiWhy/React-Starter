@@ -5,7 +5,7 @@ var helpers = require("yeoman-test");
 var mainConfig = require("../config/main");
 var testConfig = require("../config/for-test").app();
 
-describe("generator-react-16-boilerplate:app without starter content", () => {
+describe("generator-react-skeleton:app without starter content", () => {
 	const { sourceRoot } = mainConfig();
 	beforeAll(() => {
 		return helpers.run(path.join(__dirname, "../generators/app")).withPrompts({

@@ -6,7 +6,7 @@ const mainConfig = require("../config/main");
 const testConfig = require("../config/for-test");
 const textHelpers = require("../helpers/text");
 
-describe("generator-react-16-boilerplate:app", () => {
+describe("generator-react-skeleton:app", () => {
 	let packageJson;
 	const { sourceRoot } = mainConfig();
 	const { readCreatedFile } = textHelpers;

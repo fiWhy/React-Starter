@@ -1,7 +1,7 @@
 {
-  "name": "generator-react-16-boilerplate",
+  "name": "generator-react-skeleton",
   "version": "0.3.0",
-  "description": "React16 boilerplate",
+  "description": "React 16 sceleton",
   "homepage": "",
   "author": {
     "name": "Denis Buryachkovsky",
@@ -70,6 +70,6 @@
     },
     "plugins": ["prettier"]
   },
-  "repository": "/generator-react-16-boilerplate",
+  "repository": "/generator-react-skeleton",
   "license": "GPL-3.0"
 }

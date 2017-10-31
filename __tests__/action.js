@@ -23,7 +23,7 @@ const createAction = (action, options = {}) => {
 		});
 };
 
-describe("generator-react-16-boilerplate:action", () => {
+describe("generator-react-skeleton:action", () => {
 	const action = "./data";
 	const defaultActon = "dataTest";
 	const { removeSpaces } = textHelpers;

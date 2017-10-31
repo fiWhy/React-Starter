@@ -6,7 +6,7 @@ var textHelpers = require("../helpers/text");
 var mainConfig = require("../config/main");
 var testConfig = require("../config/for-test");
 
-describe("generator-react-16-boilerplate:presentation", () => {
+describe("generator-react-skeleton:presentation", () => {
 	const component = "./data";
 	const { contentFiles, upperCamel, dashed } = testConfig.presentation(component);
 	const { sourceRoot } = mainConfig();

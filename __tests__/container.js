@@ -15,7 +15,7 @@ const createComponent = (component, options = []) => {
 		});
 };
 
-describe("generator-react-16-boilerplate:container", () => {
+describe("generator-react-skeleton:container", () => {
 	const componentNameFromRoot = "./components/testComponent";
 	const componentNameForAdditionalData = "./components/withAdditionalData";
 	const componentNameForAdditionalDataNoOptions =
