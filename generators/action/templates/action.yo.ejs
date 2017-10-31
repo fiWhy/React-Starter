@@ -1,0 +1,5 @@
+import { createAction<% if(async) { %>Async<% } %> } from "redux-act<% if(async) { %>-async<% } %>";
+
+export const <%= upperCamel %>Action = createAction<% if(async) { %>Async<% } %>("<%= upperCamel %>Action"<% if(async) { %>, () =>{
+    return Promise.resolve("<%= upperCamel %>Action");
+});<% } %><% if(!async) { %>);<% } %>

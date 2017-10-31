@@ -36,15 +36,9 @@ module.exports.component = function({ component, options = {} }) {
 		contentFiles = contentFiles.concat([`${componentPath}/providers/route.provider.ts`]);
 	}
 
-	if (options.action && !isBooleanName(options.action)) {
-		contentFiles = contentFiles.concat([
-			`${componentPath}/actions/${options.action}.action.ts`
-		]);
-	}
 	if (options.reducer && !isBooleanName(options.reducer)) {
 		contentFiles = contentFiles.concat([
-			`${componentPath}/providers/reducer.provider.ts`,
-			`${componentPath}/reducers/${options.reducer}.reducer.ts`
+			`${componentPath}/providers/reducer.provider.ts`
 		]);
 	}
 
@@ -83,4 +77,66 @@ module.exports.presentationTemplate = function(withStyledComponents, component) 
     
     export default ${component}Presentation;
     `;
+};
+
+module.exports.action = action => {
+	const { sourceRoot } = mainConfig();
+	let preparations = textHelpers.componentNamePreparation(action);
+	const { dashed, fullPath } = preparations;
+	const actionPath = foldersConfig.detectPath(sourceRoot, fullPath);
+	let contentFiles = [`${actionPath}${dashed}.action.ts`];
+
+	return Object.assign(
+		{
+			contentFiles
+		},
+		preparations
+	);
+};
+
+module.exports.actionTemplate = function(action, isAsync = false) {
+	const actionName = `${action}Action`;
+	if (isAsync) {
+		return `import { createActionAsync } from "redux-act-async"; 
+		export const ${actionName} = createActionAsync("${actionName}", () =>{
+			return Promise.resolve("${actionName}");
+		});`;
+	}
+	return `import { createAction } from "redux-act"; 
+		export const ${actionName} = createAction("${actionName}");`;
+};
+
+module.exports.reducer = reducer => {
+	const { sourceRoot } = mainConfig();
+	let preparations = textHelpers.componentNamePreparation(reducer);
+	const { dashed, fullPath } = preparations;
+	const reducerPath = foldersConfig.detectPath(sourceRoot, fullPath);
+	let contentFiles = [`${reducerPath}${dashed}.reducer.ts`];
+
+	return Object.assign(
+		{
+			contentFiles
+		},
+		preparations
+	);
+};
+
+module.exports.reducerTemplate = function(
+	reducer,
+	action = null,
+	actionName = null,
+	isAsync = false
+) {
+	const reducerName = `${reducer}Reducer`;
+	if (action) {
+		if (isAsync) {
+			return `import { ${actionName} } from "${action}";
+			import { createReducerAsync } from "redux-act-async";
+			export const ${reducerName} = createReducerAsync(${actionName});`;
+		}
+		return `import { ${actionName} } from "${action}";
+			import { createReducer } from "redux-act";
+			export const ${reducerName} = createReducer(${actionName});`;
+	}
+	return `export const ${reducerName} = (state =  [], action) => { return state; };`;
 };

@@ -1,5 +1,5 @@
-import { IReducerProvider } from '../../../utils/reducer/contracts/reducer.provider';
-import { IReducerCombiner } from '../../../utils/reducer/reducer.combiner';
+import { IReducerProvider } from '<%= component.pathToRoot %>../utils/reducer/contracts/reducer.provider';
+import { IReducerCombiner } from '<%= component.pathToRoot %>../utils/reducer/reducer.combiner';
 import { <%= reducer.upperCamel %>Reducer } from '../reducers/<%= reducer.dashed %>.reducer';
 
 class <%= component.upperCamel %>ReducerProvider implements IReducerProvider {

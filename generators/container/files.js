@@ -1,6 +1,6 @@
 const { detectPath } = require("../../helpers/folders");
 
-module.exports = function({ component, action, reducer, route, sourceRoot }) {
+module.exports = function({ component, reducer, route, sourceRoot }) {
 	const componentDistPath = `${detectPath(
 		sourceRoot,
 		component.fullPath
@@ -21,22 +21,8 @@ module.exports = function({ component, action, reducer, route, sourceRoot }) {
 		]);
 	}
 
-	if (action) {
-		mainFiles = mainFiles.concat([
-			{
-				from: "actions/data.action.yo.ejs",
-				to: `${componentDistPath}/actions/${action.dashed}.action.ts`
-			}
-		]);
-	}
-
 	if (reducer) {
 		mainFiles = mainFiles.concat([
-			{
-				from: "reducers/data.reducer.yo.ejs",
-				to: `${componentDistPath}/reducers/${reducer.dashed}.reducer.ts`
-			},
-
 			{
 				from: "providers/reducer.provider.yo.ejs",
 				to: `${componentDistPath}/providers/reducer.provider.ts`

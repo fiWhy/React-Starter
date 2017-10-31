@@ -1,7 +1,6 @@
-const { folderPath } = require("./text");
+const { folderPath, standardSlash } = require("./text");
 const { join } = require("path");
 const fs = require("fs");
-const { componentsRoot } = require("../config/main")();
 
 const rmdir = path => {
 	if (fs.existsSync(path)) {
@@ -17,14 +16,28 @@ const rmdir = path => {
 	}
 };
 
-module.exports.detectPath = (base, input, empty = componentsRoot) => {
+const detectPath = (root, input, empty = "./") => {
 	const folder = folderPath(input);
 	const cwd = process.cwd();
-	const lastIndexOfBase = cwd.lastIndexOf(base);
-	const stdCwd = lastIndexOfBase > -1 ? cwd.slice(lastIndexOfBase) : base;
-	return folder[0] === "."
-		? join(stdCwd, folder)
-		: folder ? join(base, folder) : join(base, empty);
+	const lastIndexOfBase = cwd.lastIndexOf(root);
+	const stdCwd = lastIndexOfBase > -1 ? cwd.slice(lastIndexOfBase) : root;
+	return standardSlash(
+		folder[0] === "."
+			? join(stdCwd, folder)
+			: folder ? join(root, folder) : join(root, empty)
+	);
+};
+
+const countFoldersFromRoot = (root, input) => {
+	const path = detectPath(root, input);
+	const slashes = path.match(new RegExp("/", "g"));
+	if (slashes) {
+		return slashes.length;
+	}
+
+	return 0;
 };
 
 module.exports.rmdir = rmdir;
+module.exports.detectPath = detectPath;
+module.exports.countFoldersFromRoot = countFoldersFromRoot;

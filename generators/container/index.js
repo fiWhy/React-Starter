@@ -4,6 +4,7 @@ const files = require("./files");
 const textHelpers = require("../../helpers/text");
 const { isBooleanName } = require("../../helpers/types");
 const { sourceRoot, defaultActionsName } = require("../../config/main")();
+const { countFoldersFromRoot } = require("../../helpers/folders");
 
 module.exports = class extends Generator {
 	constructor(args, opts) {
@@ -37,7 +38,9 @@ module.exports = class extends Generator {
 	initializing() {
 		const { componentName } = this.options;
 		const { componentNamePreparation } = textHelpers;
-		const preparation = componentNamePreparation(componentName);
+		let preparation = componentNamePreparation(componentName);
+		const countFoldersToRoot = countFoldersFromRoot(sourceRoot, preparation.path);
+		preparation.pathToRoot = "../".repeat(countFoldersToRoot + 1);
 		this.props = { component: preparation };
 	}
 
@@ -78,10 +81,33 @@ module.exports = class extends Generator {
 	}
 
 	generatePresentation() {
-		const { component: { name, fullPath } } = this.props;
+		const { component: { name, fullPath }, action, reducer } = this.props;
 		this.composeWith(require.resolve("../presentation"), {
 			arguments: [`${fullPath}/presentations/${name}`]
 		});
+
+		if (action) {
+			this.composeWith(require.resolve("../action"), {
+				arguments: [`${fullPath}/actions/${action.value}`]
+			});
+		}
+
+		if (reducer) {
+			const { genComponentName } = textHelpers;
+			const options = {
+				action: action ? `../actions/${action.value}.action` : false,
+				actionName: action ? `${genComponentName(action.value)}Action` : false
+			};
+			this.composeWith(
+				require.resolve("../reducer"),
+				Object.assign(
+					{
+						arguments: [`${fullPath}/reducers/${reducer.value}`]
+					},
+					options
+				)
+			);
+		}
 	}
 
 	writing() {
